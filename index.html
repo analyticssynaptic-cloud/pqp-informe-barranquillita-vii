@@ -109,7 +109,7 @@
     <div class="kpi-label">Unidades vendidas</div>
   </div>
   <div class="kpi-card">
-    <div class="kpi-num verde">$5.022.960</div>
+    <div class="kpi-num verde">$5,0M</div>
     <div class="kpi-label">Venta total (COP)</div>
   </div>
   <div class="kpi-card">
@@ -510,7 +510,7 @@
           <div class="c-num">6</div>
           <div class="c-body">
             <strong>Ticket promedio global: $1.635/ud</strong>
-            <p>El ticket más alto se da en J2 ($2.403) con mezcla hacia formatos grandes. J10 récord en volumen (750 uds) mantuvo ticket de $1.532.</p>
+            <p>El ticket más alto se registró en J2 ($2.403) con mezcla hacia formatos grandes. J10 récord en volumen (750 uds) con ticket $1.532.</p>
           </div>
         </div>
         <div class="conclusion-item">
@@ -536,7 +536,7 @@ const VERDE = '#0e7a5f'; const NARANJA = '#a86a1a'; const MARINO = '#0b2545';
 new Chart(document.getElementById('chart01'), {
   type: 'bar',
   data: {
-    labels: ['J1', 'J2', 'J3', 'J4', 'J5', 'J6', 'J7', 'J8', 'J9', 'J10', 'J11'],
+    labels: ['J1\\n02-oct', 'J2\\n05-oct', 'J3\\n09-oct', 'J4\\n16-oct', 'J5\\n17-oct', 'J6\\n19-oct', 'J7\\n23-oct', 'J8\\n26-oct', 'J9\\n30-oct', 'J10\\n03-nov', 'J11\\n06-nov'],
     datasets: [{
       label: 'Venta (COP)',
       data: [195600, 569700, 311760, 454010, 437880, 376440, 154390, 552360, 326280, 1149060, 495480],
@@ -561,7 +561,7 @@ new Chart(document.getElementById('chart02'), {
 new Chart(document.getElementById('chart03'), {
   type: 'bar',
   data: {
-    labels: ['J1–J3', 'J4–J6', 'J7–J9', 'J10–J11'],
+    labels: ['Bloque 1\\n(J1–J3)', 'Bloque 2\\n(J4–J6)', 'Bloque 3\\n(J7–J9)', 'Bloque 4\\n(J10–J11)'],
     datasets: [
       { label: 'Venta', data: [1077060, 1268330, 1033030, 1644540], backgroundColor: '#1d4e89', borderRadius: 4, yAxisID: 'y' },
       { label: 'Ticket/ud', data: [1654, 1895, 1562, 1508], type: 'line', borderColor: NARANJA, backgroundColor: 'transparent', pointBackgroundColor: NARANJA, yAxisID: 'y2' }
@@ -584,7 +584,7 @@ new Chart(document.getElementById('chart04'), {
 new Chart(document.getElementById('chart05'), {
   type: 'bar',
   data: {
-    labels: ['J1', 'J2', 'J3', 'J4', 'J5', 'J6', 'J7', 'J8', 'J9', 'J10', 'J11'],
+    labels: ['J1\\n02-oct', 'J2\\n05-oct', 'J3\\n09-oct', 'J4\\n16-oct', 'J5\\n17-oct', 'J6\\n19-oct', 'J7\\n23-oct', 'J8\\n26-oct', 'J9\\n30-oct', 'J10\\n03-nov', 'J11\\n06-nov'],
     datasets: [{ label: 'Muestras', data: [481, 536, 350, 456, 240, 20, 1000, 50, 410, 120, 240], backgroundColor: '#52b6c9', borderRadius: 4 }]
   },
   options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } }, scales: { y: { beginAtZero: true } } }
