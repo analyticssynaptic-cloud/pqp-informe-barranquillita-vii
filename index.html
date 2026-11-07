@@ -1,867 +1,594 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>PQP · Informe de Actividad VII — Depósito Milena Barranquilla · Acumulado 02/10/2026 al 06/11/2026</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.2.0"></script>
-  <style>
-    :root {
-      --navy: #241c1c;
-      --red: #E1000F;
-      --red-dark: #7a0000;
-      --red-light: #ff5c5c;
-      --green: #0e7a5f;
-      --orange: #a86a1a;
-      --gold: #fbbf24;
-      --gold-bg: #fef9ec;
-      --gold-text: #92400e;
-      --bg: #f8fafc;
-      --card-bg: #ffffff;
-      --border: #e2e8f0;
-      --text: #1e293b;
-      --text-muted: #64748b;
-    }
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
-    body {
-      font-family: 'Plus Jakarta Sans', sans-serif;
-      background-color: var(--bg);
-      color: var(--text);
-      line-height: 1.5;
-      padding-bottom: 60px;
-    }
-    .container {
-      max-width: 1240px;
-      margin: 0 auto;
-      padding: 0 20px;
-    }
-    header {
-      background: linear-gradient(135deg, #ff4b4b 0%, #E1000F 50%, #7a0000 100%);
-      color: #ffffff;
-      padding: 48px 0 40px;
-      position: relative;
-      overflow: hidden;
-    }
-    header::after {
-      content: '';
-      position: absolute;
-      top: -50px;
-      right: -50px;
-      width: 300px;
-      height: 300px;
-      background: rgba(255, 255, 255, 0.08);
-      border-radius: 50%;
-      pointer-events: none;
-    }
-    .badge-repo {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      background: rgba(0, 0, 0, 0.25);
-      padding: 6px 14px;
-      border-radius: 999px;
-      font-size: 0.8rem;
-      font-weight: 600;
-      letter-spacing: 0.5px;
-      text-transform: uppercase;
-      margin-bottom: 16px;
-    }
-    .hero-title {
-      font-size: 2.2rem;
-      font-weight: 800;
-      line-height: 1.2;
-      margin-bottom: 8px;
-    }
-    .hero-subtitle {
-      font-size: 1.05rem;
-      opacity: 0.9;
-      font-weight: 400;
-      margin-bottom: 32px;
-    }
-    .hero-kpis {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-      gap: 16px;
-    }
-    .hero-kpi-card {
-      background: rgba(255, 255, 255, 0.12);
-      backdrop-filter: blur(8px);
-      border: 1px solid rgba(255, 255, 255, 0.25);
-      border-radius: 12px;
-      padding: 20px 24px;
-      display: flex;
-      flex-direction: column;
-    }
-    .hero-kpi-val {
-      font-size: 2.1rem;
-      font-weight: 800;
-      letter-spacing: -0.5px;
-    }
-    .hero-kpi-lbl {
-      font-size: 0.85rem;
-      font-weight: 500;
-      text-transform: uppercase;
-      letter-spacing: 0.5px;
-      opacity: 0.85;
-    }
-    .spotlight-banner {
-      background: var(--navy);
-      color: #fff;
-      padding: 20px 0;
-      margin-bottom: 40px;
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-    }
-    .spotlight-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
-      gap: 16px;
-    }
-    .spotlight-item {
-      padding: 8px 12px;
-      border-left: 3px solid var(--red);
-    }
-    .spotlight-lbl {
-      font-size: 0.75rem;
-      color: #94a3b8;
-      text-transform: uppercase;
-      font-weight: 600;
-    }
-    .spotlight-val {
-      font-size: 1.25rem;
-      font-weight: 700;
-      color: #f1f5f9;
-    }
-    .section-title {
-      font-size: 1.35rem;
-      font-weight: 800;
-      color: var(--navy);
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      margin-bottom: 20px;
-      text-transform: uppercase;
-      letter-spacing: -0.2px;
-    }
-    .section-title i {
-      color: var(--red);
-    }
-    .card {
-      background: var(--card-bg);
-      border: 1px solid var(--border);
-      border-radius: 12px;
-      padding: 24px;
-      margin-bottom: 32px;
-      box-shadow: 0 1px 3px rgba(0,0,0,0.04);
-    }
-    .findings-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-      gap: 16px;
-    }
-    .finding-card {
-      border: 1px solid var(--border);
-      border-left: 4px solid var(--navy);
-      border-radius: 8px;
-      padding: 16px 20px;
-      background: #fafafa;
-    }
-    .finding-card.highlight {
-      border-left-color: var(--red);
-      background: #fffafa;
-    }
-    .finding-card.gold-border {
-      border-left-color: var(--gold);
-      background: var(--gold-bg);
-    }
-    .finding-card.green-border {
-      border-left-color: var(--green);
-      background: #f0fdf4;
-    }
-    .finding-tag {
-      font-size: 0.75rem;
-      font-weight: 700;
-      text-transform: uppercase;
-      margin-bottom: 6px;
-      display: block;
-    }
-    .finding-title {
-      font-weight: 700;
-      font-size: 0.95rem;
-      margin-bottom: 6px;
-      color: var(--navy);
-    }
-    .finding-desc {
-      font-size: 0.85rem;
-      color: var(--text-muted);
-      line-height: 1.45;
-    }
-    .table-container {
-      width: 100%;
-      overflow-x: auto;
-      margin-top: 12px;
-      border-radius: 8px;
-      border: 1px solid var(--border);
-    }
-    table {
-      width: 100%;
-      border-collapse: collapse;
-      font-size: 0.85rem;
-      text-align: right;
-      white-space: nowrap;
-    }
-    th, td {
-      padding: 10px 14px;
-      border-bottom: 1px solid var(--border);
-    }
-    th {
-      background-color: #f1f5f9;
-      color: var(--navy);
-      font-weight: 700;
-      text-transform: uppercase;
-      font-size: 0.75rem;
-      letter-spacing: 0.3px;
-    }
-    th.text-left, td.text-left {
-      text-align: left;
-    }
-    th.text-center, td.text-center {
-      text-align: center;
-    }
-    tr:last-child td {
-      border-bottom: none;
-    }
-    tr.total-row {
-      background-color: #f8fafc;
-      font-weight: 700;
-      border-top: 2px solid var(--navy);
-      color: var(--navy);
-    }
-    tr.record-row {
-      background-color: var(--gold-bg) !important;
-      color: var(--gold-text) !important;
-      font-weight: 600;
-    }
-    .badge-record {
-      background-color: var(--gold);
-      color: #78350f;
-      padding: 2px 6px;
-      border-radius: 4px;
-      font-size: 0.7rem;
-      font-weight: 800;
-      margin-left: 4px;
-    }
-    .grid-2col {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(480px, 1fr));
-      gap: 24px;
-      margin-bottom: 24px;
-    }
-    .chart-box {
-      position: relative;
-      width: 100%;
-      min-height: 300px;
-    }
-    .pill {
-      display: inline-block;
-      padding: 2px 8px;
-      border-radius: 999px;
-      font-size: 0.75rem;
-      font-weight: 600;
-    }
-    .pill-green { background: #dcfce7; color: var(--green); }
-    .pill-red { background: #fee2e2; color: #991b1b; }
-    .pill-orange { background: #ffedd5; color: var(--orange); }
-    .kpi-stat-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-      gap: 16px;
-      margin-bottom: 24px;
-    }
-    .kpi-mini-card {
-      background: #fafafa;
-      border: 1px solid var(--border);
-      border-radius: 8px;
-      padding: 16px;
-      display: flex;
-      align-items: center;
-      gap: 16px;
-    }
-    .kpi-mini-icon {
-      width: 44px;
-      height: 44px;
-      border-radius: 8px;
-      background: rgba(225, 0, 15, 0.1);
-      color: var(--red);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 1.2rem;
-    }
-    .kpi-mini-val {
-      font-size: 1.4rem;
-      font-weight: 800;
-      color: var(--navy);
-    }
-    .kpi-mini-lbl {
-      font-size: 0.75rem;
-      color: var(--text-muted);
-      text-transform: uppercase;
-      font-weight: 600;
-    }
-    .pop-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-      gap: 16px;
-    }
-    .pop-card {
-      border: 1px solid var(--border);
-      border-radius: 8px;
-      overflow: hidden;
-      background: #fff;
-    }
-    .photo-placeholder {
-      background: #e5e7eb;
-      border: 2px dashed #94a3b8;
-      border-radius: 6px;
-      height: 180px;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      margin: 12px;
-      color: #64748b;
-      font-size: 0.8rem;
-      text-align: center;
-      padding: 12px;
-    }
-    .photo-placeholder i {
-      font-size: 2rem;
-      margin-bottom: 8px;
-      color: #94a3b8;
-    }
-    .pop-caption {
-      padding: 0 14px 14px;
-      font-size: 0.8rem;
-      color: var(--text-muted);
-      line-height: 1.4;
-    }
-    .carousel-container {
-      position: relative;
-      max-width: 800px;
-      margin: 0 auto;
-      overflow: hidden;
-      border-radius: 12px;
-      background: #f1f5f9;
-      border: 1px solid var(--border);
-    }
-    .carousel-track {
-      display: flex;
-      transition: transform 0.4s ease-in-out;
-    }
-    .carousel-slide {
-      min-width: 100%;
-      padding: 24px;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-    }
-    .carousel-placeholder {
-      width: 100%;
-      max-width: 600px;
-      height: 320px;
-      background: #e5e7eb;
-      border: 2px dashed #94a3b8;
-      border-radius: 8px;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      color: #64748b;
-      margin-bottom: 12px;
-    }
-    .carousel-placeholder i {
-      font-size: 2.5rem;
-      margin-bottom: 10px;
-      color: #94a3b8;
-    }
-    .carousel-desc {
-      font-size: 0.85rem;
-      font-weight: 600;
-      color: var(--navy);
-      text-align: center;
-    }
-    .carousel-btn {
-      position: absolute;
-      top: 50%;
-      transform: translateY(-50%);
-      background: rgba(36, 28, 28, 0.7);
-      color: white;
-      border: none;
-      width: 40px;
-      height: 40px;
-      border-radius: 50%;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 1rem;
-      transition: background 0.2s;
-    }
-    .carousel-btn:hover {
-      background: var(--red);
-    }
-    .carousel-btn.prev { left: 16px; }
-    .carousel-btn.next { right: 16px; }
-    .carousel-dots {
-      display: flex;
-      justify-content: center;
-      gap: 8px;
-      padding-bottom: 16px;
-    }
-    .carousel-dot {
-      width: 10px;
-      height: 10px;
-      border-radius: 50%;
-      background: #cbd5e1;
-      cursor: pointer;
-    }
-    .carousel-dot.active {
-      background: var(--red);
-    }
-    .recommendations-list {
-      display: flex;
-      flex-direction: column;
-      gap: 12px;
-    }
-    .rec-item {
-      display: flex;
-      gap: 16px;
-      padding: 16px;
-      background: #fafafa;
-      border-radius: 8px;
-      border-left: 4px solid var(--navy);
-    }
-    .rec-num {
-      width: 32px;
-      height: 32px;
-      border-radius: 50%;
-      background: var(--navy);
-      color: white;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-weight: 700;
-      font-size: 0.9rem;
-      flex-shrink: 0;
-    }
-    .rec-item.priority .rec-num {
-      background: var(--red);
-    }
-    .rec-item.priority {
-      border-left-color: var(--red);
-      background: #fffafa;
-    }
-    .rec-content h4 {
-      font-size: 0.95rem;
-      font-weight: 700;
-      color: var(--navy);
-      margin-bottom: 4px;
-    }
-    .rec-content p {
-      font-size: 0.85rem;
-      color: var(--text-muted);
-      line-height: 1.45;
-    }
-    @media (max-width: 768px) {
-      .hero-title { font-size: 1.6rem; }
-      .grid-2col { grid-template-columns: 1fr; }
-      .carousel-placeholder { height: 220px; }
-    }
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Informe de Actividad VII — Depósito Milena Barranquilla</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+<style>
+  :root {
+    --marino: #0b2545;
+    --azul-p: #13315c;
+    --azul-m: #1d4e89;
+    --cielo: #2e86ab;
+    --aguamarina: #52b6c9;
+    --verde: #0e7a5f;
+    --naranja: #a86a1a;
+    --rojo: #a12b2b;
+    --blanco: #ffffff;
+    --gris-claro: #f4f7fb;
+    --texto: #1a1a2e;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Segoe UI', Arial, sans-serif; background: var(--gris-claro); color: var(--texto); font-size: 14px; }
+  .portada { background: linear-gradient(135deg, var(--marino) 0%, var(--azul-m) 100%); color: white; padding: 48px 40px 36px; text-align: center; border-bottom: 4px solid var(--cielo); }
+  .portada .badge { display:inline-block; background: var(--cielo); color: white; font-size:11px; font-weight:700; letter-spacing:2px; padding:4px 14px; border-radius:20px; margin-bottom:16px; text-transform:uppercase; }
+  .portada h1 { font-size: 28px; font-weight: 800; margin-bottom: 8px; letter-spacing: -0.5px; }
+  .portada .sub { font-size: 15px; opacity: 0.85; margin-bottom: 4px; }
+  .portada .meta { font-size: 12px; opacity: 0.6; margin-top: 10px; letter-spacing: 1px; }
+  .kpi-banner { display: grid; grid-template-columns: repeat(4, 1fr); gap: 0; background: var(--azul-p); }
+  .kpi-card { padding: 24px 20px; text-align: center; border-right: 1px solid rgba(255,255,255,0.1); }
+  .kpi-card:last-child { border-right: none; }
+  .kpi-num { font-size: 32px; font-weight: 800; color: white; line-height: 1; }
+  .kpi-label { font-size: 11px; color: rgba(255,255,255,0.65); margin-top: 6px; text-transform: uppercase; letter-spacing: 1px; }
+  .kpi-num.verde { color: #4ade80; }
+  .kpi-num.oro { color: #fbbf24; }
+  .seccion { max-width: 1100px; margin: 32px auto; padding: 0 20px; }
+  .sec-header { display: flex; align-items: center; gap: 12px; margin-bottom: 20px; }
+  .sec-num { background: var(--azul-m); color: white; font-size: 11px; font-weight: 700; padding: 4px 10px; border-radius: 4px; letter-spacing: 1px; }
+  .sec-titulo { font-size: 18px; font-weight: 700; color: var(--marino); }
+  .sec-box { background: white; border-radius: 10px; box-shadow: 0 2px 12px rgba(0,0,0,0.07); padding: 24px; margin-bottom: 20px; }
+  .puntos-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+  .punto-card { background: white; border-radius: 10px; padding: 20px; border-left: 4px solid var(--cielo); box-shadow: 0 2px 8px rgba(0,0,0,0.06); }
+  .punto-num { font-size: 28px; font-weight: 800; color: var(--cielo); margin-bottom: 8px; }
+  .punto-titulo { font-size: 13px; font-weight: 700; color: var(--marino); margin-bottom: 6px; }
+  .punto-texto { font-size: 12px; color: #555; line-height: 1.6; }
+  table { width: 100%; border-collapse: collapse; font-size: 12px; }
+  th { background: var(--marino); color: white; padding: 9px 10px; text-align: center; font-size: 11px; letter-spacing: 0.5px; }
+  td { padding: 8px 10px; border-bottom: 1px solid #e8edf4; text-align: center; }
+  tr:hover td { background: #f0f5ff; }
+  tr:nth-child(even) td { background: #f8fafc; }
+  tr:nth-child(even):hover td { background: #e8f0ff; }
+  .td-label { text-align: left; font-weight: 600; color: var(--marino); }
+  .td-total { font-weight: 700; background: #eef3fb !important; color: var(--marino); }
+  .td-total-row td { background: var(--marino) !important; color: white !important; font-weight: 700; }
+  .chart-wrap { position: relative; height: 280px; }
+  .chart-wrap-sm { position: relative; height: 220px; }
+  .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+  .three-col { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+  .inv-card { background: white; border-radius: 8px; padding: 16px; box-shadow: 0 1px 6px rgba(0,0,0,0.07); text-align: center; }
+  .inv-sku { font-size: 11px; font-weight: 700; color: var(--marino); margin-bottom: 10px; }
+  .inv-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px; }
+  .inv-row span { font-size: 11px; color: #666; }
+  .inv-row strong { font-size: 14px; color: var(--marino); }
+  .inv-delta { font-size: 11px; font-weight: 700; padding: 2px 8px; border-radius: 10px; display: inline-block; margin-top: 6px; }
+  .delta-pos { background: #dcfce7; color: var(--verde); }
+  .delta-neg { background: #fee2e2; color: var(--rojo); }
+  .foto-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; }
+  .foto-placeholder { background: linear-gradient(135deg, #e8edf4, #d0daea); border-radius: 8px; aspect-ratio: 4/3; display: flex; flex-direction: column; align-items: center; justify-content: center; color: var(--azul-m); font-size: 11px; font-weight: 700; border: 2px dashed var(--cielo); text-align: center; padding: 12px; gap: 8px; }
+  .foto-placeholder .icon { font-size: 28px; opacity: 0.5; }
+  .conclusion-list { display: flex; flex-direction: column; gap: 14px; }
+  .conclusion-item { display: flex; gap: 14px; align-items: flex-start; }
+  .c-num { background: var(--marino); color: white; font-size: 13px; font-weight: 800; width: 28px; height: 28px; border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+  .c-body strong { font-size: 13px; color: var(--marino); display: block; margin-bottom: 3px; }
+  .c-body p { font-size: 12px; color: #555; line-height: 1.6; }
+  .footer { background: var(--marino); color: rgba(255,255,255,0.6); text-align: center; padding: 20px; font-size: 11px; margin-top: 40px; }
+  .footer strong { color: white; }
+  .variacion-pos { color: var(--verde); font-weight: 700; }
+  .variacion-neg { color: var(--rojo); font-weight: 700; }
+  .verde-txt { color: var(--verde); font-weight: 700; }
+  .rojo-txt { color: var(--rojo); font-weight: 700; }
+  @media(max-width: 768px) {
+    .kpi-banner { grid-template-columns: repeat(2,1fr); }
+    .puntos-grid { grid-template-columns: 1fr; }
+    .two-col { grid-template-columns: 1fr; }
+    .foto-grid { grid-template-columns: repeat(2,1fr); }
+    .three-col { grid-template-columns: 1fr; }
+  }
+</style>
 </head>
 <body>
 
-  <!-- HERO -->
-  <header>
-    <div class="container">
-      <div class="badge-repo">
-        <i class="fa-solid fa-code-branch"></i> pqp-informe-barranquillita-vii
-      </div>
-      <h1 class="hero-title">PQP · Informe de Actividad VII</h1>
-      <p class="hero-subtitle">Depósito Milena Barranquilla · Acumulado 02/10/2026 al 06/11/2026</p>
-      
-      <div class="hero-kpis">
-        <div class="hero-kpi-card">
-          <span class="hero-kpi-val">11</span>
-          <span class="hero-kpi-lbl">Jornadas Operadas</span>
-        </div>
-        <div class="hero-kpi-card">
-          <span class="hero-kpi-val">3,071</span>
-          <span class="hero-kpi-lbl">Uds. Vendidas</span>
-        </div>
-        <div class="hero-kpi-card">
-          <span class="hero-kpi-val">$1.635</span>
-          <span class="hero-kpi-lbl">Ticket por Unidad</span>
-        </div>
-      </div>
+<!-- PORTADA -->
+<div class="portada">
+  <div class="badge">Informe VII · Depósito Milena</div>
+  <h1>Informe de Actividad VII</h1>
+  <div class="sub">Depósito Milena — Barranquilla · Portafolio Ultrex</div>
+  <div class="sub">02/10/2026 al 06/11/2026</div>
+  <div class="meta">SYNAPTIC ANALYTICS · ARIA Intelligence · Generado automáticamente · Nov 2026</div>
+</div>
+
+<!-- BANNER KPIs -->
+<div class="kpi-banner">
+  <div class="kpi-card">
+    <div class="kpi-num">11</div>
+    <div class="kpi-label">Jornadas realizadas</div>
+  </div>
+  <div class="kpi-card">
+    <div class="kpi-num oro">3,071</div>
+    <div class="kpi-label">Unidades vendidas</div>
+  </div>
+  <div class="kpi-card">
+    <div class="kpi-num verde">$5.022.960</div>
+    <div class="kpi-label">Venta total (COP)</div>
+  </div>
+  <div class="kpi-card">
+    <div class="kpi-num">$1.635</div>
+    <div class="kpi-label">Ticket promedio / ud</div>
+  </div>
+</div>
+
+<!-- LOS PUNTOS DEL PERÍODO -->
+<div class="seccion">
+  <div class="sec-header">
+    <span class="sec-num">00</span>
+    <span class="sec-titulo">Los Puntos del Período</span>
+  </div>
+  <div class="puntos-grid">
+    <div class="punto-card">
+      <div class="punto-num">01</div>
+      <div class="punto-titulo">J10 (03-nov) — Récord histórico</div>
+      <div class="punto-texto">Con $1.149.060 y 750 unidades, J10 es la mejor jornada individual del programa. Supera en 252.2% a J9. El Bloque 4 (J10–J11) acumula $1.644.540 — el más alto del ciclo.</div>
     </div>
-  </header>
-
-  <!-- SPOTLIGHT BANNER -->
-  <section class="spotlight-banner">
-    <div class="container">
-      <div class="spotlight-grid">
-        <div class="spotlight-item">
-          <div class="spotlight-lbl">Venta Total Acumulada</div>
-          <div class="spotlight-val">$5.022.960</div>
-        </div>
-        <div class="spotlight-item">
-          <div class="spotlight-lbl">Bloque 1 (J1–J3)</div>
-          <div class="spotlight-val">$1.077.060</div>
-        </div>
-        <div class="spotlight-item">
-          <div class="spotlight-lbl">Bloque 2 (J4–J6)</div>
-          <div class="spotlight-val">$1.268.330</div>
-        </div>
-        <div class="spotlight-item">
-          <div class="spotlight-lbl">Bloque 3 (J7–J9)</div>
-          <div class="spotlight-val">$1.033.030</div>
-        </div>
-        <div class="spotlight-item">
-          <div class="spotlight-lbl">Bloque 4 (J10–J11)</div>
-          <div class="spotlight-val">$1.644.540</div>
-        </div>
-      </div>
+    <div class="punto-card" style="border-left-color: var(--verde);">
+      <div class="punto-num" style="color: var(--verde);">02</div>
+      <div class="punto-titulo">Flo Fibrapro 125 g lidera el portafolio</div>
+      <div class="punto-texto">Con $1.265.000 (25.2% del total acumulado), Flo Fibrapro 125 g es el SKU ancla. Fibrapro concentra el 54.1% del valor total vs Manzana con 45.9% — balance sólido entre las dos líneas.</div>
     </div>
-  </section>
+    <div class="punto-card" style="border-left-color: var(--naranja);">
+      <div class="punto-num" style="color: var(--naranja);">03</div>
+      <div class="punto-titulo">Stock crítico — acción inmediata</div>
+      <div class="punto-texto">Niveles críticos: Flo Fibrapro 125 g (34 uds), Flo Fibrapro 500 g (12 uds), Manzana 500 g (6 uds). Restock urgente para no frenar el ritmo del Bloque siguiente.</div>
+    </div>
+  </div>
+</div>
 
-  <main class="container">
-    
-    <!-- RESUMEN EJECUTIVO (LOS PUNTOS DEL PERÍODO) -->
-    <section class="card">
-      <h2 class="section-title"><i class="fa-solid fa-compass"></i> Los Puntos del Período · Resumen Ejecutivo</h2>
-      <div class="findings-grid">
-        <div class="finding-card gold-border">
-          <span class="finding-tag" style="color: var(--gold-text);"><i class="fa-solid fa-crown"></i> Récord Absoluto</span>
-          <div class="finding-title">Hito Histórico en Jornada 10</div>
-          <div class="finding-desc">J10 (03-nov) pulverizó marcas históricas con $1.149.060 y 750 unidades, impulsando al Bloque 4 a un salto de +59.2% ($1.64M).</div>
-        </div>
-        <div class="finding-card highlight">
-          <span class="finding-tag" style="color: var(--red);"><i class="fa-solid fa-fire"></i> Preferencia de Formato</span>
-          <div class="finding-title">Dominio de Gramaje 125g</div>
-          <div class="finding-desc">El formato de entrada aportó el 72.1% del volumen (2.214 uds) y 44.1% del valor total, afianzando la prueba del consumidor popular.</div>
-        </div>
-        <div class="finding-card green-border">
-          <span class="finding-tag" style="color: var(--green);"><i class="fa-solid fa-scale-balanced"></i> Mix Olfativo</span>
-          <div class="finding-title">Equilibrio con Ventaja Fibrapro</div>
-          <div class="finding-desc">Fibrapro concentró el 54.1% de la facturación ($2.71M) frente al 45.9% de Manzana ($2.30M), evidenciando alta sinergia entre aromas.</div>
-        </div>
-        <div class="finding-card">
-          <span class="finding-tag" style="color: var(--orange);"><i class="fa-solid fa-triangle-exclamation"></i> Riesgo en Góndola</span>
-          <div class="finding-title">Quiebre Crítico en 250g</div>
-          <div class="finding-desc">Agotamiento al 100% (0 uds) en ambas fragancias de 250g al cierre, limitando el ticket promedio proyectado en la recta final.</div>
-        </div>
-      </div>
-    </section>
+<!-- SECCIÓN 01: VENTA REGISTRADA -->
+<div class="seccion">
+  <div class="sec-header">
+    <span class="sec-num">01</span>
+    <span class="sec-titulo">Venta Registrada · 11 Jornadas</span>
+  </div>
+  <div class="sec-box" style="overflow-x:auto;">
+    <table>
+      <thead>
+        <tr>
+          <th style="text-align:left;">Referencia</th>
+          <th>J1<br>02-oct</th><th>J2<br>05-oct</th><th>J3<br>09-oct</th><th>J4<br>16-oct</th><th>J5<br>17-oct</th><th>J6<br>19-oct</th><th>J7<br>23-oct</th><th>J8<br>26-oct</th><th>J9<br>30-oct</th><th>J10<br>03-nov</th><th>J11<br>06-nov</th>
+          <th>TOTAL</th><th>%</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="td-label">Flo Fibrapro 125 g</td><td>$135.000</td><td>—</td><td>$48.000</td><td>$96.000</td><td>$60.000</td><td>$54.000</td><td>$72.000</td><td>$252.000</td><td>$108.000</td><td>$402.000</td><td>$38.000</td>
+          <td class="td-total">$1.265.000</td>
+          <td class="td-total">25.2%</td>
+        </tr>
+        <tr>
+          <td class="td-label">Flo Fibrapro 250 g</td><td>—</td><td>$92.400</td><td>—</td><td>$5.600</td><td>$134.400</td><td>$33.600</td><td>$78.400</td><td>$33.600</td><td>$134.400</td><td>$285.600</td><td>—</td>
+          <td class="td-total">$798.000</td>
+          <td class="td-total">15.9%</td>
+        </tr>
+        <tr>
+          <td class="td-label">Flo Fibrapro 500 g</td><td>—</td><td>$95.760</td><td>$47.880</td><td>$47.880</td><td>—</td><td>$71.820</td><td>$3.990</td><td>$79.800</td><td>$47.880</td><td>$119.700</td><td>$139.650</td>
+          <td class="td-total">$654.360</td>
+          <td class="td-total">13.0%</td>
+        </tr>
+        <tr>
+          <td class="td-label">Manzana 125 g</td><td>$27.000</td><td>$72.000</td><td>$168.000</td><td>$96.000</td><td>$36.000</td><td>$78.000</td><td>—</td><td>$24.000</td><td>$36.000</td><td>$162.000</td><td>$250.000</td>
+          <td class="td-total">$949.000</td>
+          <td class="td-total">18.9%</td>
+        </tr>
+        <tr>
+          <td class="td-label">Manzana 250 g</td><td>$33.600</td><td>$285.600</td><td>—</td><td>$100.800</td><td>—</td><td>$67.200</td><td>—</td><td>$67.200</td><td>—</td><td>$84.000</td><td>—</td>
+          <td class="td-total">$638.400</td>
+          <td class="td-total">12.7%</td>
+        </tr>
+        <tr>
+          <td class="td-label">Manzana 500 g</td><td>—</td><td>$23.940</td><td>$47.880</td><td>$107.730</td><td>$207.480</td><td>$71.820</td><td>—</td><td>$95.760</td><td>—</td><td>$95.760</td><td>$67.830</td>
+          <td class="td-total">$718.200</td>
+          <td class="td-total">14.3%</td>
+        </tr></tbody>
+      <tfoot>
+        <tr class="td-total-row">
+          <td class="td-label" style="text-align:left;color:white;">TOTAL VENTA</td>
+          <td>$195.600</td><td>$569.700</td><td>$311.760</td><td>$454.010</td><td>$437.880</td><td>$376.440</td><td>$154.390</td><td>$552.360</td><td>$326.280</td><td style="background:#fef9ec;color:#92400e;font-weight:800;">$1.149.060</td><td>$495.480</td>
+          <td>$5.022.960</td><td>100%</td>
+        </tr>
+        <tr>
+          <td class="td-label">Unidades</td>
+          <td>174</td><td>237</td><td>240</td><td>269</td><td>196</td><td>204</td><td>101</td><td>356</td><td>204</td><td style="background:#fef9ec;color:#92400e;font-weight:800;">750</td><td>340</td>
+          <td class="td-total">3,071</td><td></td>
+        </tr>
+        <tr>
+          <td class="td-label">Ticket prom./ud</td>
+          <td>$1.124</td><td>$2.403</td><td>$1.299</td><td>$1.687</td><td>$2.234</td><td>$1.845</td><td>$1.528</td><td>$1.551</td><td>$1.599</td><td>$1.532</td><td>$1.457</td>
+          <td class="td-total">$1.635</td><td></td>
+        </tr>
+      </tfoot>
+    </table>
+  </div>
+  <div class="two-col">
+    <div class="sec-box">
+      <div style="font-size:13px;font-weight:700;color:var(--marino);margin-bottom:14px;">Gráfica 01 — Venta total por jornada (COP)</div>
+      <div class="chart-wrap"><canvas id="chart01"></canvas></div>
+    </div>
+    <div class="sec-box">
+      <div style="font-size:13px;font-weight:700;color:var(--marino);margin-bottom:14px;">Gráfica 02 — Mezcla por referencia (% del total)</div>
+      <div class="chart-wrap"><canvas id="chart02"></canvas></div>
+    </div>
+  </div>
+  <div class="sec-box" style="overflow-x:auto;">
+    <div style="font-size:13px;font-weight:700;color:var(--marino);margin-bottom:14px;">Mezcla y ticket promedio por jornada</div>
+    <table>
+      <thead>
+        <tr><th>Jornada</th><th>Fecha</th><th>Unidades</th><th>Venta Total</th><th>Ticket/ud</th><th>% Fibrapro</th><th>% Manzana</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>J1</td><td>02-oct</td>
+          <td>174</td>
+          <td>$195.600</td>
+          <td>$1.124</td>
+          <td>69.0%</td><td>31.0%</td>
+        </tr>
+        <tr>
+          <td>J2</td><td>05-oct</td>
+          <td>237</td>
+          <td>$569.700</td>
+          <td>$2.403</td>
+          <td>33.0%</td><td>67.0%</td>
+        </tr>
+        <tr>
+          <td>J3</td><td>09-oct</td>
+          <td>240</td>
+          <td>$311.760</td>
+          <td>$1.299</td>
+          <td>30.8%</td><td>69.2%</td>
+        </tr>
+        <tr>
+          <td>J4</td><td>16-oct</td>
+          <td>269</td>
+          <td>$454.010</td>
+          <td>$1.687</td>
+          <td>32.9%</td><td>67.1%</td>
+        </tr>
+        <tr>
+          <td>J5</td><td>17-oct</td>
+          <td>196</td>
+          <td>$437.880</td>
+          <td>$2.234</td>
+          <td>44.4%</td><td>55.6%</td>
+        </tr>
+        <tr>
+          <td>J6</td><td>19-oct</td>
+          <td>204</td>
+          <td>$376.440</td>
+          <td>$1.845</td>
+          <td>42.3%</td><td>57.7%</td>
+        </tr>
+        <tr>
+          <td>J7</td><td>23-oct</td>
+          <td>101</td>
+          <td>$154.390</td>
+          <td>$1.528</td>
+          <td>100.0%</td><td>0.0%</td>
+        </tr>
+        <tr>
+          <td>J8</td><td>26-oct</td>
+          <td>356</td>
+          <td>$552.360</td>
+          <td>$1.551</td>
+          <td>66.2%</td><td>33.8%</td>
+        </tr>
+        <tr>
+          <td>J9</td><td>30-oct</td>
+          <td>204</td>
+          <td>$326.280</td>
+          <td>$1.599</td>
+          <td>89.0%</td><td>11.0%</td>
+        </tr>
+        <tr style="background:#fef9ec;">
+          <td>J10 ⭐</td><td>03-nov</td>
+          <td>750</td>
+          <td>$1.149.060</td>
+          <td>$1.532</td>
+          <td>70.3%</td><td>29.7%</td>
+        </tr>
+        <tr>
+          <td>J11</td><td>06-nov</td>
+          <td>340</td>
+          <td>$495.480</td>
+          <td>$1.457</td>
+          <td>35.9%</td><td>64.1%</td>
+        </tr></tbody>
+    </table>
+  </div>
+</div>
 
-    <!-- 01 · VENTA REGISTRADA -->
-    <section class="card">
-      <h2 class="section-title"><i class="fa-solid fa-chart-line"></i> 01 · Venta Registrada por Jornada y SKU</h2>
-      
-      <div class="table-container">
-        <table>
-          <thead>
-            <tr>
-              <th class="text-left">Jornada · Fecha</th>
-              <th>Fib 125g</th>
-              <th>Fib 250g</th>
-              <th>Fib 500g</th>
-              <th>Manz 125g</th>
-              <th>Manz 250g</th>
-              <th>Manz 500g</th>
-              <th>Total Venta</th>
-              <th>Uds</th>
-              <th>Ticket/ud</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td class="text-left">J1 · 02-oct</td>
-              <td>$135.000</td>
-              <td>$0</td>
-              <td>$0</td>
-              <td>$27.000</td>
-              <td>$33.600</td>
-              <td>$0</td>
-              <td>$195.600</td>
-              <td>174</td>
-              <td>$1.124</td>
-            </tr>
-            <tr>
-              <td class="text-left">J2 · 05-oct</td>
-              <td>$0</td>
-              <td>$92.400</td>
-              <td>$95.760</td>
-              <td>$72.000</td>
-              <td>$285.600</td>
-              <td>$23.940</td>
-              <td>$569.700</td>
-              <td>237</td>
-              <td>$2.403</td>
-            </tr>
-            <tr>
-              <td class="text-left">J3 · 09-oct</td>
-              <td>$48.000</td>
-              <td>$0</td>
-              <td>$47.880</td>
-              <td>$168.000</td>
-              <td>$0</td>
-              <td>$47.880</td>
-              <td>$311.760</td>
-              <td>240</td>
-              <td>$1.299</td>
-            </tr>
-            <tr>
-              <td class="text-left">J4 · 16-oct</td>
-              <td>$96.000</td>
-              <td>$5.600</td>
-              <td>$47.880</td>
-              <td>$96.000</td>
-              <td>$100.800</td>
-              <td>$107.730</td>
-              <td>$454.010</td>
-              <td>269</td>
-              <td>$1.687</td>
-            </tr>
-            <tr>
-              <td class="text-left">J5 · 17-oct</td>
-              <td>$60.000</td>
-              <td>$134.400</td>
-              <td>$0</td>
-              <td>$36.000</td>
-              <td>$0</td>
-              <td>$207.480</td>
-              <td>$437.880</td>
-              <td>196</td>
-              <td>$2.234</td>
-            </tr>
-            <tr>
-              <td class="text-left">J6 · 19-oct</td>
-              <td>$54.000</td>
-              <td>$33.600</td>
-              <td>$71.820</td>
-              <td>$78.000</td>
-              <td>$67.200</td>
-              <td>$71.820</td>
-              <td>$376.440</td>
-              <td>204</td>
-              <td>$1.845</td>
-            </tr>
-            <tr>
-              <td class="text-left">J7 · 23-oct</td>
-              <td>$72.000</td>
-              <td>$78.400</td>
-              <td>$3.990</td>
-              <td>$0</td>
-              <td>$0</td>
-              <td>$0</td>
-              <td>$154.390</td>
-              <td>101</td>
-              <td>$1.528</td>
-            </tr>
-            <tr>
-              <td class="text-left">J8 · 26-oct</td>
-              <td>$252.000</td>
-              <td>$33.600</td>
-              <td>$79.800</td>
-              <td>$24.000</td>
-              <td>$67.200</td>
-              <td>$95.760</td>
-              <td>$552.360</td>
-              <td>356</td>
-              <td>$1.551</td>
-            </tr>
-            <tr>
-              <td class="text-left">J9 · 30-oct</td>
-              <td>$108.000</td>
-              <td>$134.400</td>
-              <td>$47.880</td>
-              <td>$36.000</td>
-              <td>$0</td>
-              <td>$0</td>
-              <td>$326.280</td>
-              <td>204</td>
-              <td>$1.599</td>
-            </tr>
-            <tr class="record-row">
-              <td class="text-left">J10 · 03-nov <span class="badge-record"><i class="fa-solid fa-star"></i> RÉCORD</span></td>
-              <td>$402.000</td>
-              <td>$285.600</td>
-              <td>$119.700</td>
-              <td>$162.000</td>
-              <td>$84.000</td>
-              <td>$95.760</td>
-              <td>$1.149.060</td>
-              <td>750</td>
-              <td>$1.532</td>
-            </tr>
-            <tr>
-              <td class="text-left">J11 · 06-nov</td>
-              <td>$38.000</td>
-              <td>$0</td>
-              <td>$139.650</td>
-              <td>$250.000</td>
-              <td>$0</td>
-              <td>$67.830</td>
-              <td>$495.480</td>
-              <td>340</td>
-              <td>$1.457</td>
-            </tr>
-            <tr class="total-row">
-              <td class="text-left">TOTAL / MIX</td>
-              <td>$1.265.000 (25.2%)</td>
-              <td>$798.000 (15.9%)</td>
-              <td>$654.360 (13.0%)</td>
-              <td>$949.000 (18.9%)</td>
-              <td>$638.400 (12.7%)</td>
-              <td>$718.200 (14.3%)</td>
-              <td>$5.022.960</td>
-              <td>3.071</td>
-              <td>$1.635</td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
+<!-- SECCIÓN 02: COMPARATIVO POR BLOQUES -->
+<div class="seccion">
+  <div class="sec-header">
+    <span class="sec-num">02</span>
+    <span class="sec-titulo">Comparativo por Bloques</span>
+  </div>
+  <div class="two-col">
+    <div class="sec-box">
+      <div style="font-size:13px;font-weight:700;color:var(--marino);margin-bottom:14px;">Gráfica 03 — Venta acumulada por bloque (COP)</div>
+      <div class="chart-wrap"><canvas id="chart03"></canvas></div>
+    </div>
+    <div class="sec-box">
+      <div style="font-size:13px;font-weight:700;color:var(--marino);margin-bottom:14px;">Tabla consolidada por bloque</div>
+      <table>
+        <thead>
+          <tr><th>Bloque</th><th>Jornadas</th><th>Período</th><th>Uds</th><th>Venta</th><th>Ticket</th><th>Variación $</th></tr>
+        </thead>
+        <tbody>
+        <tr>
+          <td><strong>B1</strong></td>
+          <td>J1–J3</td>
+          <td>02 Oct a 09 Oct</td>
+          <td>651</td>
+          <td>$1.077.060</td>
+          <td>$1.654</td>
+          <td>—</td>
+        </tr>
+        <tr>
+          <td><strong>B2</strong></td>
+          <td>J4–J6</td>
+          <td>16 Oct a 19 Oct</td>
+          <td>669</td>
+          <td>$1.268.330</td>
+          <td>$1.895</td>
+          <td><span class="variacion-pos">+17.8%</span></td>
+        </tr>
+        <tr>
+          <td><strong>B3</strong></td>
+          <td>J7–J9</td>
+          <td>23 Oct a 30 Oct</td>
+          <td>661</td>
+          <td>$1.033.030</td>
+          <td>$1.562</td>
+          <td><span class="variacion-neg">-18.6%</span></td>
+        </tr>
+        <tr>
+          <td><strong>B4</strong></td>
+          <td>J10–J11</td>
+          <td>03 Nov a 06 Nov</td>
+          <td>1,090</td>
+          <td>$1.644.540</td>
+          <td>$1.508</td>
+          <td><span class="variacion-pos">+59.2%</span></td>
+        </tr></tbody>
+        <tfoot>
+          <tr class="td-total-row">
+            <td colspan="3">TOTAL ACUMULADO</td>
+            <td>3,071</td>
+            <td>$5.022.960</td>
+            <td>$1.635</td>
+            <td></td>
+          </tr>
+        </tfoot>
+      </table>
+    </div>
+  </div>
+</div>
 
-      <!-- CHARTS FIG 01 & FIG 02 -->
-      <div class="grid-2col" style="margin-top: 28px;">
-        <div>
-          <h3 style="font-size: 0.95rem; font-weight: 700; margin-bottom: 12px; color: var(--navy);">
-            Fig 01: Venta Total por Jornada ($COP)
-          </h3>
-          <div class="chart-box">
-            <canvas id="chartVD"></canvas>
+<!-- SECCIÓN 03: INVENTARIO -->
+<div class="seccion">
+  <div class="sec-header">
+    <span class="sec-num">03</span>
+    <span class="sec-titulo">Tendencia de Inventario · Cierre por Referencia</span>
+  </div>
+  <div class="sec-box">
+    <div style="font-size:13px;font-weight:700;color:var(--marino);margin-bottom:14px;">Gráfica 04 — Inventario de cierre por referencia (última jornada)</div>
+    <div class="chart-wrap"><canvas id="chart04"></canvas></div>
+  </div>
+  <div class="three-col">
+        <div class="inv-card">
+          <div class="inv-sku">Flo Fibrapro 125 g</div>
+          <div class="inv-row"><span>Cierre:</span><strong>34 uds</strong></div>
+          <div><span class="inv-delta delta-neg">🚨 stock crítico</span></div>
+        </div>
+        <div class="inv-card">
+          <div class="inv-sku">Flo Fibrapro 500 g</div>
+          <div class="inv-row"><span>Cierre:</span><strong>12 uds</strong></div>
+          <div><span class="inv-delta delta-neg">🚨 stock crítico</span></div>
+        </div>
+        <div class="inv-card">
+          <div class="inv-sku">Manzana 125 g</div>
+          <div class="inv-row"><span>Cierre:</span><strong>354 uds</strong></div>
+          <div><span class="inv-delta delta-pos">354 uds</span></div>
+        </div>
+        <div class="inv-card">
+          <div class="inv-sku">Manzana 500 g</div>
+          <div class="inv-row"><span>Cierre:</span><strong>6 uds</strong></div>
+          <div><span class="inv-delta delta-neg">🚨 stock crítico</span></div>
+        </div></div>
+</div>
+
+<!-- SECCIÓN 04: MUESTRAS Y PREMIOS -->
+<div class="seccion">
+  <div class="sec-header">
+    <span class="sec-num">04</span>
+    <span class="sec-titulo">Muestras y Premios</span>
+  </div>
+  <div class="two-col">
+    <div class="sec-box">
+      <div style="font-size:13px;font-weight:700;color:var(--marino);margin-bottom:14px;">Gráfica 05 — Muestras entregadas por jornada</div>
+      <div class="chart-wrap"><canvas id="chart05"></canvas></div>
+    </div>
+    <div class="sec-box">
+      <div style="font-size:13px;font-weight:700;color:var(--marino);margin-bottom:14px;">Resumen muestras y premios</div>
+      <table>
+        <thead><tr><th>Jornada</th><th>Fecha</th><th>Muestras</th><th>Kits</th></tr></thead>
+        <tbody>
+          <tr><td>J1</td><td>02-oct</td><td>481</td><td>6</td></tr><tr><td>J2</td><td>05-oct</td><td>536</td><td>6</td></tr><tr><td>J3</td><td>09-oct</td><td>350</td><td>2</td></tr><tr><td>J4</td><td>16-oct</td><td>456</td><td>3</td></tr><tr><td>J5</td><td>17-oct</td><td>240</td><td>2</td></tr><tr><td>J6</td><td>19-oct</td><td>20</td><td>0</td></tr><tr><td>J7</td><td>23-oct</td><td>1,000</td><td>1</td></tr><tr><td>J8</td><td>26-oct</td><td>50</td><td>3</td></tr><tr><td>J9</td><td>30-oct</td><td>410</td><td>4</td></tr><tr><td>J10</td><td>03-nov</td><td>120</td><td>9</td></tr><tr><td>J11</td><td>06-nov</td><td>240</td><td>3</td></tr>
+        </tbody>
+        <tfoot>
+          <tr class="td-total-row">
+            <td colspan="2">TOTAL</td>
+            <td>3,903</td>
+            <td>39</td>
+          </tr>
+        </tfoot>
+      </table>
+    </div>
+  </div>
+</div>
+
+<!-- SECCIÓN 05: MATERIAL POP -->
+<div class="seccion">
+  <div class="sec-header">
+    <span class="sec-num">05</span>
+    <span class="sec-titulo">Material POP — Instalación en Punto de Venta</span>
+  </div>
+  <div class="sec-box">
+    <div class="foto-grid">
+      <div class="foto-placeholder"><div class="icon">📷</div><div>FOTO PENDIENTE<br>reemplazar con URL Google Drive</div></div><div class="foto-placeholder"><div class="icon">📷</div><div>FOTO PENDIENTE<br>reemplazar con URL Google Drive</div></div><div class="foto-placeholder"><div class="icon">📷</div><div>FOTO PENDIENTE<br>reemplazar con URL Google Drive</div></div><div class="foto-placeholder"><div class="icon">📷</div><div>FOTO PENDIENTE<br>reemplazar con URL Google Drive</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- SECCIÓN 06: EVIDENCIA FOTOGRÁFICA -->
+<div class="seccion">
+  <div class="sec-header">
+    <span class="sec-num">06</span>
+    <span class="sec-titulo">Evidencia Fotográfica</span>
+  </div>
+  <div class="sec-box">
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px;">
+      <div class="foto-placeholder"><div class="icon">📷</div><div>FOTO PENDIENTE<br>reemplazar con URL Google Drive</div></div><div class="foto-placeholder"><div class="icon">📷</div><div>FOTO PENDIENTE<br>reemplazar con URL Google Drive</div></div><div class="foto-placeholder"><div class="icon">📷</div><div>FOTO PENDIENTE<br>reemplazar con URL Google Drive</div></div><div class="foto-placeholder"><div class="icon">📷</div><div>FOTO PENDIENTE<br>reemplazar con URL Google Drive</div></div><div class="foto-placeholder"><div class="icon">📷</div><div>FOTO PENDIENTE<br>reemplazar con URL Google Drive</div></div><div class="foto-placeholder"><div class="icon">📷</div><div>FOTO PENDIENTE<br>reemplazar con URL Google Drive</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- CIERRE: CONCLUSIONES -->
+<div class="seccion">
+  <div class="sec-header">
+    <span class="sec-num">07</span>
+    <span class="sec-titulo">Conclusiones y Recomendaciones</span>
+  </div>
+  <div class="sec-box">
+    <div class="conclusion-list">
+        <div class="conclusion-item">
+          <div class="c-num">1</div>
+          <div class="c-body">
+            <strong>Jornada 10 marca récord histórico</strong>
+            <p>Con $1.149.060 y 750 unidades, J10 (03-nov) supera en 252.2% a la jornada anterior. Es el mejor resultado individual del programa.</p>
           </div>
         </div>
-        <div>
-          <h3 style="font-size: 0.95rem; font-weight: 700; margin-bottom: 12px; color: var(--navy);">
-            Fig 02: Venta por Referencia y Jornada ($COP Apilado)
-          </h3>
-          <div class="chart-box">
-            <canvas id="chartRef"></canvas>
+        <div class="conclusion-item">
+          <div class="c-num">2</div>
+          <div class="c-body">
+            <strong>Flo Fibrapro 125 g lidera con 25.2% del total</strong>
+            <p>Acumula $1.265.000 y 1265 unidades en las 11 jornadas. Es el SKU ancla del portafolio Ultrex en Depósito Milena.</p>
           </div>
         </div>
-      </div>
+        <div class="conclusion-item">
+          <div class="c-num">3</div>
+          <div class="c-body">
+            <strong>Bloque 4 (J10–J11) es el más fuerte</strong>
+            <p>Genera $1.644.540 con 1090 unidades y ticket $1.508/ud — mejor bloque del acumulado.</p>
+          </div>
+        </div>
+        <div class="conclusion-item">
+          <div class="c-num">4</div>
+          <div class="c-body">
+            <strong>Muestras: 3,903 unidades entregadas en 11 jornadas</strong>
+            <p>Promedio de 355 muestras por jornada. Los 39 kits distribuidos fortalecen el vínculo con los compradores frecuentes.</p>
+          </div>
+        </div>
+        <div class="conclusion-item">
+          <div class="c-num">5</div>
+          <div class="c-body">
+            <strong>Mezcla: Fibrapro 54.1% — Manzana 45.9%</strong>
+            <p>Fibrapro mantiene liderazgo en valor. Manzana aporta volumen especialmente en formatos 125g y 500g. La diversificación entre líneas es saludable.</p>
+          </div>
+        </div>
+        <div class="conclusion-item">
+          <div class="c-num">6</div>
+          <div class="c-body">
+            <strong>Ticket promedio global: $1.635/ud</strong>
+            <p>El ticket más alto se da en J2 ($2.403) con mezcla hacia formatos grandes. J10 récord en volumen (750 uds) mantuvo ticket de $1.532.</p>
+          </div>
+        </div>
+        <div class="conclusion-item">
+          <div class="c-num">7</div>
+          <div class="c-body">
+            <strong>Inventarioalerta en Flo Fibrapro 125 g, Flo Fibrapro 500 g, Manzana 500 g</strong>
+            <p>Stock crítico detectado en: Flo Fibrapro 125 g (34 uds), Flo Fibrapro 500 g (12 uds), Manzana 500 g (6 uds). Restock urgente recomendado.</p>
+          </div>
+        </div></div>
+  </div>
+</div>
 
-      <!-- TABLA MEZCLA Y TICKET -->
-      <h3 style="font-size: 1rem; font-weight: 700; margin: 28px 0 12px; color: var(--navy);">
-        Composición de Mezcla de Marca y Dinámica de Ticket
-      </h3>
-      <div class="table-container">
-        <table>
-          <thead>
-            <tr>
-              <th class="text-left">Jornada</th>
-              <th class="text-left">Fecha</th>
-              <th>Unidades</th>
-              <th>Venta Total</th>
-              <th>Ticket Promedio</th>
-              <th>% Mix Fibrapro</th>
-              <th>% Mix Manzana</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr><td class="text-left">J1</td><td class="text-left">02-oct</td><td>174</td><td>$195.600</td><td>$1.124</td><td>69.0%</td><td>31.0%</td></tr>
-            <tr><td class="text-left">J2</td><td class="text-left">05-oct</td><td>237</td><td>$569.700</td><td>$2.403</td><td>33.0%</td><td>67.0%</td></tr>
-            <tr><td class="text-left">J3</td><td class="text-left">09-oct</td><td>240</td><td>$311.760</td><td>$1.299</td><td>30.8%</td><td>69.2%</td></tr>
-            <tr><td class="text-left">J4</td><td class="text-left">16-oct</td><td>269</td><td>$454.010</td><td>$1.687</td><td>32.9%</td><td>67.1%</td></tr>
-            <tr><td class="text-left">J5</td><td class="text-left">17-oct</td><td>196</td><td>$437.880</td><td>$2.234</td><td>44.4%</td><td>55.6%</td></tr>
-            <tr><td class="text-left">J6</td><td class="text-left">19-oct</td><td>204</td><td>$376.440</td><td>$1.845</td><td>42.3%</td><td>57.7%</td></tr>
-            <tr><td class="text-left">J7</td><td class="text-left">23-oct</td><td>101</td><td>$154.390</td><td>$1.528</td><td>100.0%</td><td>0.0%</td></tr>
-            <tr><td class="text-left">J8</td><td class="text-left">26-oct</td><td>356</td><td>$552.360</td><td>$1.551</td><td>66.2%</td><td>33.8%</td></tr>
-            <tr><td class="text-left">J9</td><td class="text-left">30-oct</td><td>204</td><td>$326.280</td><td>$1.599</td><td>89.0%</td><td>11.0%</td></tr>
-            <tr class="record-row"><td class="text-left">J10 ⭐</td><td class="text-left">03-nov</td><td>750</td><td>$1.149.060</td><td>$1.532</td><td>70.3%</td><td>29.7%</td></tr>
-            <tr><td class="text-left">J11</td><td class="text-left">06-nov</td><td>340</td><td>$495.480</td><td>$1.457</td><td>35.9%</td><td>64.1%</td></tr>
-            <tr class="total-row"><td class="text-left" colspan="2">PROMEDIO / ACUM</td><td>3.071</td><td>$5.022.960</td><td>$1.635</td><td>54.1%</td><td>45.9%</td></tr>
-          </tbody>
-        </table>
-      </div>
+<div class="footer">
+  <strong>Synaptic Analytics</strong> · ARIA Intelligence · Informe VII · Depósito Milena Barranquilla<br>
+  Generado automáticamente · 06/11/2026 · analyticssynaptic-cloud.github.io
+</div>
 
-      <!-- TABLA EFECTO VOLUMEN VS PRECIO/MEZCLA -->
-      <h3 style="font-size: 1rem; font-weight: 700; margin: 28px 0 12px; color: var(--navy);">
-        Descomposición Efecto Volumen vs. Efecto Precio / Mezcla por Tramo
-      </h3>
-      <div class="table-container">
-        <table>
-          <thead>
-            <tr>
-              <th class="text-left">Tramo Inter-Jornada</th>
-              <th>Δ Uds</th>
-              <th>Δ Venta Total</th>
-              <th>Efecto Volumen</th>
-              <th>Efecto Precio / Mezcla</th>
-              <th class="text-center">Factor Conductor</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td class="text-left">J1 → J2</td>
-              <td>+63</td>
-              <td style="color:var(--green);">+$374.100</td>
-              <td>+$70.812</td>
-              <td style="color:var(--green);">+$303.288</td>
-              <td class="text-center"><span class="pill pill-green">Precio / Up-mix</span></td>
-            </tr>
-            <tr>
-              <td class="text-left">J2 → J3</td>
-              <td>+3</td>
-              <td style="color:#991b1b;">-$257.940</td>
-              <td>+$7.209</td>
-              <td style="color:#991b1b;">-$265.149</td>
-              <td class="text-center"><span class="pill pill-red">Mezcla a 125g</span></td>
-            </tr>
-            <tr>
-              <td class="text-left">J3 → J4</td>
-              <td>+29</td>
-              <td style="color:var(--green);">+$142.250</td>
-              <td>+$37.671</td>
-              <td style="color:var(--green);">+$104.579</td>
-              <td class="text-center"><span class="pill pill-green">Mix Formatos Medios</span></td>
-            </tr>
-            <tr>
-              <td class="text-left">J4 → J5</td>
-              <td>-73</td>
-              <td style="color:#991b1b;">-$16.130</td>
-              <td>-$123.151</td>
-              <td style="color:var(--green);">+$107.021</td>
-              <td class="text-center"><span class="pill pill-orange">Ticket Alto amortigua</span></td>
-            </tr>
-            <tr>
-              <td class="text-left">J5 → J6</td>
-              <td>+8</td>
-              <td style="color:#991b1b;">-$61.440</td>
-              <td>+$17.872</td>
-              <td style="color:#991b1b;">-$79.312</td>
-              <td class="text-center"><span class="pill pill-red">Compresión de Mix</span></td>
-            </tr>
-            <tr>
-              <td class="text-left">J6 → J7</td>
-              <td>-103</td>
-              <td style="color:#991b1b;">-$222.050</td>
-              <td>-$190.035</td>
-              <td>-$32.015</td>
-              <td class="text-center"><span class="pill pill-red">Contracción Demanda</span></td>
-            </tr>
-            <tr>
-              <td class="text-left">J7 → J8</td>
-              <td>+255</td>
-              <td style="color:var(--green);">+$397.
+<script>
+const COLORS = ['#1d4e89','#2e86ab','#52b6c9','#0b2545','#13315c','#3a7bbf'];
+const VERDE = '#0e7a5f'; const NARANJA = '#a86a1a'; const MARINO = '#0b2545';
+
+// Chart 01 — Venta por jornada
+new Chart(document.getElementById('chart01'), {
+  type: 'bar',
+  data: {
+    labels: ['J1', 'J2', 'J3', 'J4', 'J5', 'J6', 'J7', 'J8', 'J9', 'J10', 'J11'],
+    datasets: [{
+      label: 'Venta (COP)',
+      data: [195600, 569700, 311760, 454010, 437880, 376440, 154390, 552360, 326280, 1149060, 495480],
+      backgroundColor: [195600, 569700, 311760, 454010, 437880, 376440, 154390, 552360, 326280, 1149060, 495480].map((v,i) => i === 9 ? '#fbbf24' : '#1d4e89'),
+      borderRadius: 4
+    }]
+  },
+  options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } }, scales: { y: { ticks: { callback: v => '$' + (v/1000).toFixed(0) + 'k' } } } }
+});
+
+// Chart 02 — Mezcla por referencia (dona)
+new Chart(document.getElementById('chart02'), {
+  type: 'doughnut',
+  data: {
+    labels: ['Flo Fibrapro 125 g', 'Flo Fibrapro 250 g', 'Flo Fibrapro 500 g', 'Manzana 125 g', 'Manzana 250 g', 'Manzana 500 g'],
+    datasets: [{ data: [1265000, 798000, 654360, 949000, 638400, 718200], backgroundColor: COLORS, borderWidth: 2 }]
+  },
+  options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { position: 'right', labels: { font: { size: 11 } } } } }
+});
+
+// Chart 03 — Bloques
+new Chart(document.getElementById('chart03'), {
+  type: 'bar',
+  data: {
+    labels: ['J1–J3', 'J4–J6', 'J7–J9', 'J10–J11'],
+    datasets: [
+      { label: 'Venta', data: [1077060, 1268330, 1033030, 1644540], backgroundColor: '#1d4e89', borderRadius: 4, yAxisID: 'y' },
+      { label: 'Ticket/ud', data: [1654, 1895, 1562, 1508], type: 'line', borderColor: NARANJA, backgroundColor: 'transparent', pointBackgroundColor: NARANJA, yAxisID: 'y2' }
+    ]
+  },
+  options: { responsive: true, maintainAspectRatio: false, scales: { y: { ticks: { callback: v => '$' + (v/1000000).toFixed(1) + 'M' } }, y2: { position: 'right', ticks: { callback: v => '$' + v.toLocaleString() } } } }
+});
+
+// Chart 04 — Inventario cierre
+new Chart(document.getElementById('chart04'), {
+  type: 'bar',
+  data: {
+    labels: ['Flo Fibrapro 125 g', 'Flo Fibrapro 500 g', 'Manzana 125 g', 'Manzana 500 g'],
+    datasets: [{ label: 'Uds cierre', data: [34, 12, 354, 6], backgroundColor: [34, 12, 354, 6].map(v => v < 50 ? '#a12b2b' : v < 150 ? NARANJA : VERDE), borderRadius: 4 }]
+  },
+  options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } }, scales: { y: { beginAtZero: true } } }
+});
+
+// Chart 05 — Muestras por jornada
+new Chart(document.getElementById('chart05'), {
+  type: 'bar',
+  data: {
+    labels: ['J1', 'J2', 'J3', 'J4', 'J5', 'J6', 'J7', 'J8', 'J9', 'J10', 'J11'],
+    datasets: [{ label: 'Muestras', data: [481, 536, 350, 456, 240, 20, 1000, 50, 410, 120, 240], backgroundColor: '#52b6c9', borderRadius: 4 }]
+  },
+  options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } }, scales: { y: { beginAtZero: true } } }
+});
+</script>
+</body>
+</html>
